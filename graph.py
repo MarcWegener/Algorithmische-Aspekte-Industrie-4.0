@@ -28,5 +28,4 @@ class Graph(object):
     def getWeightMatrix(self):
         return self.m
 
-l = ["A","B","C","D"]
 

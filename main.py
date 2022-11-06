@@ -1,5 +1,5 @@
 from graph import *
-import csv
+from graph_csv import *
 
 
 # g = Graph(l,False)
@@ -19,35 +19,9 @@ import csv
 
 # print(g2.getWeightMatrix())
 
-
-def readCSV(direction=False):
-    with open("Graph.csv") as csvdatei:
-        csv_reader_object = csv.DictReader(csvdatei)
-
-        rows = []
-
-        for row in csv_reader_object:
-            rows.append(row)
-
-    nodes = []
-    for k, v in rows[0].items():
-        nodes.append(k)
-
-    print(nodes)
-
-    g = Graph(nodes, direction)
-    counter = 0
-    for row in rows:
-        for k, v in row.items():
-            g.addConnection(nodes[counter], k, v)
-
-        counter += 1
-    return g
-
-
-g = readCSV()
+g = readCSV("Graph.csv")
 print(g.getWeightMatrix())
+writeCSV("graph-output.csv",g)
 
 
-def writeCSV():
-    pass
+
