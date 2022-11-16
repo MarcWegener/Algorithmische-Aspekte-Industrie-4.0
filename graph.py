@@ -20,10 +20,20 @@ class Graph(object):
         b = self.nodes.index(n2)
 
         if self.direction == False:
-            self.m[a][b] = weight
-            self.m[b][a] = weight
+
+            if weight == "None":
+                self.m[a][b] = None
+                self.m[b][a] = None
+            else:
+                self.m[a][b] = int(weight)
+                self.m[b][a] = int(weight)
+
         else:
-            self.m[a][b] = weight
+            if weight == "None":
+                self.m[a][b] = None
+            else:
+                self.m[a][b] = int(weight)
+                
 
     def getWeightMatrix(self):
         return self.m
