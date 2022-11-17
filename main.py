@@ -80,8 +80,56 @@ def solvePrim(g, currentNodeName):
 # Aufgabe 4:
 
 def solveTSP(mst, currentNode):
+
+    usedNodes = []    
+    tour =[]
     
-    pass
+    lastNode = None
+
+
+    while(len(usedNodes) != len(mst.nodes)):
+        currentNodeIndex = mst.nodes.index(currentNode)
+        row = mst.m[currentNodeIndex] 
+
+        count = 0
+        for i in row:
+         # iterativer Ansatz 
+             if i is not None and i > 0:
+                 if currentNode in tour:
+                     x = tour.index(currentNode)
+                     l1=tour[:x]
+                     l2=tour[x+1:]
+                     l1.extend([currentNode,mst.nodes[count],currentNode])
+                     l1.extend(l2)
+                     tour = l1
+                 else:    
+                     tour.append(currentNode)
+                     tour.append(mst.nodes[count])
+                     tour.append(currentNode)
+             count+=1
+             print(tour)
+        usedNodes.append(currentNode)   
+        
+
+        #Pseudo rekursiv:
+        #def solveTSP(mst,currentNode,lastNode):
+
+        #
+        # currentNodeIndex = mst.nodes.index(currentNode)
+        #row = mst.m[currentNodeIndex]
+        # count = 0
+        #for i in row:
+        #if i is not None and i > 0 and:
+        #   lastNode = mst.nodes[count]
+        #  solveTSP(mst,lastNode,currentNode)
+        # count+=1
+        #return tour+=lastNode
+        
+
+
+    
+
+
 
 
 def main():
