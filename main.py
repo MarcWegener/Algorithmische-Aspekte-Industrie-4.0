@@ -1,6 +1,6 @@
-# from graph import *
-# from graph_csv import *
-# from priorityQueue import *
+from graph import *
+from graph_csv import *
+from priorityQueue import *
 
 
 # # g = Graph(l,False)
@@ -26,89 +26,55 @@
 # # writeCSV("graph-output.csv",g)
 
 
-# # Aufgabe 3
-# def solvePrim(g, n):
-#     pq = PriorityQueue()
-#     usedNodes = []
+# Aufgabe 3
+def solvePrim(g, currentNodeName):
+    pq = PriorityQueue()
+    usedNodes = []
 
-#     count = 0
-#     weight = 0
+    currentNodeIndex = g.nodes.index(currentNodeName)
+    edgeWeight = 0
 
-#     currentNodeIndex = g.nodes.index(n)
-#     lastNode = None
-#     nextNode = None
-#     x = None
+    nextNodeName = currentNodeName
 
-#     n1 = None
-#     n2 = 0
+    # Einfügen in PQ erfolgt immer als Tuple (Distanz bzw. Kantengewicht, Knotenname)
+    # Einfügen des Startknotens in die PQ. Jeder Startknoten hat zu sich selber die Distanz von 0
+    pq.push((0, currentNodeName, nextNodeName))
 
-#     # Einfügen in PQ erfolgt immer als Tuple (Distanz bzw. Kantengewicht, Knotenname)
-#     # Einfügen des Startknotens in die PQ. Jeder Startknoten hat zu sich selber die Distanz von 0
-#     pq.push((0, n))
+    # Untergraph von G: MST, also gleiche Knotenmenge und in diesem Fall ungerichtet
+    mst = Graph(g.nodes, False)
 
-#     # Untergraph von G: MST, also gleiche Knotenmenge und in diesem Fall ungerichtet
-#     mst = Graph(g.nodes, False)
+#count < len(g.nodes) - 1
 
-# #count < len(g.nodes) - 1
+    # Abbruchbedingung: PQ ist leer
+    while(pq.queueLen() != 0):
 
-#     # Abbruchbedingung: PQ ist leer
-#     while(pq.queueLen() != 0):
+        # Entfernen des ersten Elements
+        y = pq.popQueue()
+        if y[2] not in usedNodes:
+            usedNodes.append(y[2])
+            mst.addConnection(y[1], y[2], y[0])
+        print("Used Nodes:", usedNodes)
+        currentNodeName = y[2]
+        currentNodeIndex = g.nodes.index(y[2])
 
-#         # Entfernen des ersten Elements
-#         y = pq.popQueue()
-#         if y[1] not in usedNodes:
-#             usedNodes.append(y[1])
-#         print("Used Nodes:",usedNodes)
+        # Von dem Startknoten aus wird jeder Knoten der Knotenmenge von G durchlaufen
+        for i in range(len(g.nodes)):
 
-#         # minEdgeWeight auf hohen Wert setzten, damit dieses wieder von den Kantengewichten des Graphen unterboten werden kann
-#         minEdgeWeight = 10*9999
-        
+            # Wenn Kantengewicht nicht Unendlich (None) oder 0 ist (selber Knoten)
+            # wird der Knoten ausgehend von dem aktuell betrachteten Knoten in die PQ eingefügt
+            nextNodeName = g.nodes[i]
+            edgeWeight = g.m[currentNodeIndex][i]
 
+            if edgeWeight is not None and edgeWeight > 0 and nextNodeName not in usedNodes:
+                pq.push((edgeWeight, currentNodeName, nextNodeName))
 
-#         # Von dem Startknoten aus wird jeder Knoten der Knotenmenge von G durchlaufen
-#         for i in range(len(g.nodes)):
-        
-#             # Wenn Kantengewicht nicht Unendlich (None) oder 0 ist (selber Knoten)
-#             # wird der Knoten ausgehend von dem aktuell betrachteten Knoten in die PQ eingefügt
-#             x = g.m[currentNodeIndex][i]
-
-#             if x is not None and x > 0:
-                
-#                 # Push Tuple aus: (Kantengewicht, )
-#                 # 2. Element Nodeliste an Stelle z.B. Index von Liste A an Stelle an der das min Kantengewicht liegt aus Liste A 
-
-#                 if g.nodes[g.m[currentNodeIndex].index(x,i)] not in usedNodes:
-#                     # hier muss noch getestet werden, ob ein Knoten nicht schon im Ausgabegraphen mst enthalten ist
-#                     print("Betrachteter Knoten:", g.nodes[g.m[currentNodeIndex].index(x,i)], "von", y[1])
-#                     pq.push((x, g.nodes[g.m[currentNodeIndex].index(x,i)]))
-
-#             # Wenn Kantengewicht nicht Unendlich (None) oder 0 ist (selber Knoten) und Kantengewicht kleiner dem
-#             # bisher kleinsten, gefundenen Kantengewicht entspricht wird dieses aktualisiert
-            
-#             if x is not None and x > 0 and x <= minEdgeWeight and g.nodes[g.m[currentNodeIndex].index(x)] != lastNode:
-#                 minEdgeWeight = x
-#                 lastNode = currentNodeIndex
-#                 nextNode = i
-#                 # print("lastNode:",lastNode)
-#                 # print("nextNode:",nextNode)
-
-#         n1 = g.nodes[lastNode]
-#         n2 = g.nodes[nextNode]
-#         mst.addConnection(n1, n2, minEdgeWeight)
-#         currentNodeIndex = nextNode
-
-        
+    return mst
 
 
-#     return mst
+g = readCSV("Graph3.csv")
+mst = solvePrim(g, 'F')
+print("MST:")
+for i in mst.getWeightMatrix():
+    print(i)
 
-# g = readCSV("Graph3.csv")
-# mst = solvePrim(g, 'A')
-# for i in mst.getWeightMatrix():
-#     print(i)
-
-# # nimmt Graphen und Startknoten als String an z.B. 'A'
-
-
-
-
+# nimmt Graphen und Startknoten als String an z.B. 'A'
