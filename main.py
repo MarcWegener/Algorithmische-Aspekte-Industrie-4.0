@@ -77,10 +77,44 @@ def solvePrim(g, currentNodeName):
     return mst, mstWeight
 
 
-g = readCSV("Graph3.csv")
-mst, mstWeight = solvePrim(g, 'F')
-print("MST: Gewicht: ", mstWeight)
-for i in mst.getWeightMatrix():
-    print(i)
+# Aufgabe 4:
+
+def solveTSP(mst, currentNode):
+    
+    pass
+
+
+def main():
+
+    # Aufgabe 3:
+
+    # g = readCSV("Graph3.csv")
+    # mst, mstWeight = solvePrim(g, 'A')
+    # print("MST: Gewicht: ", mstWeight)
+    # for i in mst.getWeightMatrix():
+    #     print(i)
+
+
+    # Aufgabe 4:
+
+    g = readCSV("Graph4.csv")
+    mst, mstWeight = solvePrim(g, 'A')
+    print("MST: Gewicht: ", mstWeight)
+    for i in mst.getWeightMatrix():
+        print(i)
+
+    tour = solveTSP(mst, 'A')
 
 # nimmt Graphen und Startknoten als String an z.B. 'A'
+
+
+
+
+
+if __name__ == "__main__":
+    main()
+
+
+
+
+
