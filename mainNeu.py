@@ -38,9 +38,8 @@ def solvePrim(g, currentNodeName):
             # Wenn Kantengewicht nicht Unendlich (None) oder 0 ist (selber Knoten)
             # wird der Knoten ausgehend von dem aktuell betrachteten Knoten in die PQ eingefügt
             edgeWeight = g.m[currentNodeIndex][i]
-
             if edgeWeight is not None and edgeWeight > 0:
-                nextNodeName =  g.nodes.index(i)
+                nextNodeName =  g.nodes[i]
                 pq.push((edgeWeight, currentNodeName, nextNodeName))
 
             
