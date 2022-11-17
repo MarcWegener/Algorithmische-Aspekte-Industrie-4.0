@@ -27,9 +27,13 @@ from priorityQueue import *
 
 
 # Aufgabe 3
+
 def solvePrim(g, currentNodeName):
+    
+    mstWeight = 0
     pq = PriorityQueue()
     usedNodes = []
+    
 
     currentNodeIndex = g.nodes.index(currentNodeName)
     edgeWeight = 0
@@ -56,6 +60,7 @@ def solvePrim(g, currentNodeName):
         print("Used Nodes:", usedNodes)
         currentNodeName = y[2]
         currentNodeIndex = g.nodes.index(y[2])
+        mstWeight += y[0]
 
         # Von dem Startknoten aus wird jeder Knoten der Knotenmenge von G durchlaufen
         for i in range(len(g.nodes)):
@@ -67,13 +72,14 @@ def solvePrim(g, currentNodeName):
 
             if edgeWeight is not None and edgeWeight > 0 and nextNodeName not in usedNodes:
                 pq.push((edgeWeight, currentNodeName, nextNodeName))
+                
 
-    return mst
+    return mst, mstWeight
 
 
 g = readCSV("Graph3.csv")
-mst = solvePrim(g, 'F')
-print("MST:")
+mst, mstWeight = solvePrim(g, 'F')
+print("MST: Gewicht: ", mstWeight)
 for i in mst.getWeightMatrix():
     print(i)
 
