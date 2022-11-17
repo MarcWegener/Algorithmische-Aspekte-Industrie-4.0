@@ -28,31 +28,29 @@ def solvePrim(g, currentNodeName):
         # Entfernen des ersten Elements
         y = pq.popQueue()
         if y[2] not in usedNodes:
-            usedNodes.append(y[1])
-            mst.addConnection(currentNodeName, nextNodeName, y[0])
-        print("Used Nodes:",usedNodes)
+            usedNodes.append(y[2])
+            mst.addConnection(y[1], y[2], y[0])
+        print("Used Nodes:", usedNodes)
+        currentNodeName = y[2]
+        currentNodeIndex = g.nodes.index(y[2])
 
         # Von dem Startknoten aus wird jeder Knoten der Knotenmenge von G durchlaufen
         for i in range(len(g.nodes)):
-        
+
             # Wenn Kantengewicht nicht Unendlich (None) oder 0 ist (selber Knoten)
             # wird der Knoten ausgehend von dem aktuell betrachteten Knoten in die PQ eingefügt
+            nextNodeName = g.nodes[i]
             edgeWeight = g.m[currentNodeIndex][i]
-            if edgeWeight is not None and edgeWeight > 0:
-                nextNodeName =  g.nodes[i]
+
+            if edgeWeight is not None and edgeWeight > 0 and nextNodeName not in usedNodes:
                 pq.push((edgeWeight, currentNodeName, nextNodeName))
-
-            
-
-        
-
-        
-
 
     return mst
 
+
 g = readCSV("Graph3.csv")
-mst = solvePrim(g, 'A')
+mst = solvePrim(g, 'F')
+print("MST:")
 for i in mst.getWeightMatrix():
     print(i)
 
