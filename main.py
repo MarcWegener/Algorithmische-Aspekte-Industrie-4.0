@@ -92,22 +92,24 @@ def solveHierholzer(mst, currentNode):
 
         count = 0
         for i in row:
+
+            nextNode = mst.nodes[count]
          # iterativer Ansatz
-            if i is not None and i > 0 and mst.nodes[count] not in usedNodes:
+            if i is not None and i > 0 and nextNode not in usedNodes:
 
                 if currentNode in tour:
                         x = tour.index(currentNode)
                         l1 = tour[:x]
                         l2 = tour[x+1:]
-                        l1.extend([currentNode, mst.nodes[count], currentNode])
+                        l1.extend([currentNode, nextNode, currentNode])
                         l1.extend(l2)
                         tour = l1
                 else:
                     tour.append(currentNode)
-                    tour.append(mst.nodes[count])
+                    tour.append(nextNode)
                     tour.append(currentNode)
 
-                nextNodes.append(mst.nodes[count])
+                nextNodes.append(nextNode)
                 # print(nextNodes)
 
             count+=1
@@ -158,7 +160,7 @@ def main():
     for i in mst.getWeightMatrix():
         print(i)
 
-    tour = solveHierholzer(mst, 'H')
+    tour = solveHierholzer(mst, 'A')
 
 # nimmt Graphen und Startknoten als String an z.B. 'A'
 
