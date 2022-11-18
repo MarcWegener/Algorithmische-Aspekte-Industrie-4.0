@@ -29,11 +29,10 @@ from priorityQueue import *
 # Aufgabe 3
 
 def solvePrim(g, currentNodeName):
-    
+
     mstWeight = 0
     pq = PriorityQueue()
     usedNodes = []
-    
 
     currentNodeIndex = g.nodes.index(currentNodeName)
     edgeWeight = 0
@@ -47,7 +46,7 @@ def solvePrim(g, currentNodeName):
     # Untergraph von G: MST, also gleiche Knotenmenge und in diesem Fall ungerichtet
     mst = Graph(g.nodes, False)
 
-#count < len(g.nodes) - 1
+# count < len(g.nodes) - 1
 
     # Abbruchbedingung: PQ ist leer
     while(pq.queueLen() != 0):
@@ -72,59 +71,67 @@ def solvePrim(g, currentNodeName):
 
             if edgeWeight is not None and edgeWeight > 0 and nextNodeName not in usedNodes:
                 pq.push((edgeWeight, currentNodeName, nextNodeName))
-                
 
     return mst, mstWeight
 
 
 # Aufgabe 4:
 
-def solveTSP(mst, currentNode):
+def solveHierholzer(mst, currentNode):
 
-    usedNodes = []    
-    tour =[]
-    
+    usedNodes = []
+    tour = []
+
     lastNode = None
+    nextNodes = [currentNode]
 
-
-    while(len(usedNodes) != len(mst.nodes)):
+    while(len(nextNodes) != 0):
+        currentNode = nextNodes.pop(0)
         currentNodeIndex = mst.nodes.index(currentNode)
-        row = mst.m[currentNodeIndex] 
+        row = mst.m[currentNodeIndex]
 
         count = 0
         for i in row:
-         # iterativer Ansatz 
-             if i is not None and i > 0:
-                 if currentNode in tour:
-                     x = tour.index(currentNode)
-                     l1=tour[:x]
-                     l2=tour[x+1:]
-                     l1.extend([currentNode,mst.nodes[count],currentNode])
-                     l1.extend(l2)
-                     tour = l1
-                 else:    
-                     tour.append(currentNode)
-                     tour.append(mst.nodes[count])
-                     tour.append(currentNode)
-             count+=1
-             print(tour)
+         # iterativer Ansatz
+            if i is not None and i > 0 and mst.nodes[count] not in usedNodes:
+
+                if currentNode in tour:
+                        x = tour.index(currentNode)
+                        l1 = tour[:x]
+                        l2 = tour[x+1:]
+                        l1.extend([currentNode, mst.nodes[count], currentNode])
+                        l1.extend(l2)
+                        tour = l1
+                else:
+                    tour.append(currentNode)
+                    tour.append(mst.nodes[count])
+                    tour.append(currentNode)
+
+                nextNodes.append(mst.nodes[count])
+                # print(nextNodes)
+
+            count+=1
+            # print(tour)
+        
         usedNodes.append(currentNode)   
         
+        
+    print(tour)   
 
-        #Pseudo rekursiv:
-        #def solveTSP(mst,currentNode,lastNode):
+        # Pseudo rekursiv:
+        # def solveTSP(mst,currentNode,lastNode):
 
         #
         # currentNodeIndex = mst.nodes.index(currentNode)
-        #row = mst.m[currentNodeIndex]
+        # row = mst.m[currentNodeIndex]
         # count = 0
-        #for i in row:
-        #if i is not None and i > 0 and:
+        # for i in row:
+        # if i is not None and i > 0 and:
         #   lastNode = mst.nodes[count]
         #  solveTSP(mst,lastNode,currentNode)
         # count+=1
-        #return tour+=lastNode
-        
+        # return tour+=lastNode
+     
 
 
     
@@ -151,7 +158,7 @@ def main():
     for i in mst.getWeightMatrix():
         print(i)
 
-    tour = solveTSP(mst, 'A')
+    tour = solveHierholzer(mst, 'H')
 
 # nimmt Graphen und Startknoten als String an z.B. 'A'
 
