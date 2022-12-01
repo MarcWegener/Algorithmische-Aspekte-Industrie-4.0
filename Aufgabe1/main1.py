@@ -82,7 +82,6 @@ def solveHierholzer(mst, currentNode):
     usedNodes = []
     tour = []
 
-    lastNode = None
     nextNodes = [currentNode]
 
     while(len(nextNodes) != 0):
@@ -118,7 +117,14 @@ def solveHierholzer(mst, currentNode):
         usedNodes.append(currentNode)   
         
         
-    print(tour)   
+    # Tour (Liste) wird in eine dict übersetzt (darf keine Dopplung enthalten), 
+    # um doppelte Werte zu entfernen, dann erfolgt die Rückübersetzung in eine Liste
+    # zuletzt wird noch der Startknoten wieder an das Ende angefügt
+    cleanedTour = list(dict.fromkeys(tour))
+    cleanedTour.append(tour[0])
+
+
+    print(cleanedTour)   
 
         # Pseudo rekursiv:
         # def solveTSP(mst,currentNode,lastNode):
@@ -154,13 +160,18 @@ def main():
 
     # Aufgabe 4:
 
-    g = readCSV("Graph4.csv")
+    g = readCSV("Aufgabe1\Graph4.csv")
     mst, mstWeight = solvePrim(g, 'A')
+    
     print("MST: Gewicht: ", mstWeight)
+    print("MST: ")
     for i in mst.getWeightMatrix():
         print(i)
 
     tour = solveHierholzer(mst, 'A')
+
+
+    
 
 # nimmt Graphen und Startknoten als String an z.B. 'A'
 
