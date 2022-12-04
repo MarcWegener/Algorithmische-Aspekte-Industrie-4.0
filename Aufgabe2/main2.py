@@ -27,5 +27,6 @@ root = avl.insertNode(root, 22)
 root = avl.insertNode(root, 23)
 root = avl.insertNode(root, 26)
 root = avl.insertNode(root, 29)
+root = avl.insertNode(root,14)
 
 avl.preOrder(root)

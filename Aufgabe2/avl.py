@@ -16,7 +16,7 @@ class AVL(object):
         # Balance Faktor wird ermittelt
         balance = self.getBalance(root)
 
-        print("Balance: ", balance)
+        
 
         # Wenn kleiner als -1, also unbalanciert nach links
         if balance < -1:
@@ -42,6 +42,7 @@ class AVL(object):
                 root.lChild = self.leftRotation(root.lChild)
                 return self.rightRotation(root)
 
+        return root
 
     def getHeight(self, root):
         if not root:
@@ -103,7 +104,7 @@ class AVL(object):
 
     
     def preOrder(self, root):
-        print("test")
+    
         if not root: 
             return
         
