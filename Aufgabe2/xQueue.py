@@ -18,6 +18,6 @@ class XQueue(object):
     def getData(self):
         return self.__data
 
-    def calculateEuclidMetric(self,p,q):
+    def calculateEuclidMetricDistance(self,p,q):
         dist = math.sqrt(math.pow((p[0] - q[0]),2) + math.pow((p[1] - q[1]),2))
         return dist
