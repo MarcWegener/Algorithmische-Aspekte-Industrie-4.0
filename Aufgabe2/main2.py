@@ -26,7 +26,12 @@ def checkSuccessor(delta, q, root, avl, value):
         delta = newDelta
 
     while check.value[1] - node.value[1] >= delta:
-        check = avl.getSuccessor(check.rChild)
+        if check.rChild:
+            check = avl.getSuccessor(check.rChild)
+        else:
+            return delta
+
+        #check = avl.getSuccessor(check.rChild)
         newDelta = q.calculateEuclidMetricDistance(node.value, check.value)
 
         if newDelta < delta:
@@ -53,7 +58,12 @@ def checkPredecessor(delta, q, root, avl, value):
         delta = newDelta
 
     while check.value[1] - node.value[1] >= delta:
-        check = avl.getPredecessor(check.lChild)
+        if check.lChild:
+            check = avl.getPredecessor(check.lChild)
+        else:
+            return delta
+
+        #check = avl.getPredecessor(check.lChild)
         newDelta = q.calculateEuclidMetricDistance(node.value, check.value)
 
         if newDelta < delta:

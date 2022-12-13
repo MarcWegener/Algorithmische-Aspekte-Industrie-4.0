@@ -84,7 +84,7 @@ class AVL(object):
         if balance < -1:
             # Wenn Wert des eingefügten Knotens kleiner ist als der der aktuellen root
             # also im linken Teilbaum der root eingefügt wurde
-            if value[1] > root.rChild.value[1]:
+            if self.getBalance(root.rChild) <= 0:
                 # Dann muss nach rechts ausgeglichen werden
                 return self.leftRotation(root)
                 # Sonst wurde der neue Knoten im rechten Teilbaum eingefügt und 
@@ -97,7 +97,7 @@ class AVL(object):
         if balance > 1:
             # Wenn Wert des eingefügten Knotens größer ist als der Wert der aktuellen root
             # also im rechten Teilbaum der root eingefügt wurde
-            if value[1] < root.lChild.value[1]:
+            if self.getBalance(root.lChild) >= 0:
                 return self.rightRotation(root)
             else:
                 # links-rechts Rotation
