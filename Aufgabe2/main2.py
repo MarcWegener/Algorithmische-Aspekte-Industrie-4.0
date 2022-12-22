@@ -9,8 +9,7 @@ def checkSuccessor(delta, q, root, avl, value):
     # Knoten aus Baum mit Wert des Tuples wird im Baum gesucht und als Node zurückgegeben
     node = avl.searchNode(root, value)
     
-    # print(f"Successor Node: {node.value}")
-
+    #Kopie des Knotens angelegt, da "Unendlichkeitsknoten" nicht in den Ursprungsbaum eingefuegt werden darf
     check = copy.deepcopy(node)
     #print(f"checkS: {check.value}")
 
@@ -44,10 +43,9 @@ def checkPredecessor(delta, q, root, avl, value):
     print(f"root:{root.value}")
     node = avl.searchNode(root, value)
     
-    # print(f"Predecessor Node: {node.value}")
+    #Kopie des Knotens angelegt, da "Unendlichkeitsknoten" nicht in den Ursprungsbaum eingefuegt werden darf
     check = copy.deepcopy(node)
-    #print(f"checkP: {check.value}")
-    
+
     if check is None or check.lChild is None:
         check = Node((-9999,-9999))
     else:
@@ -114,6 +112,7 @@ def closestPair():
             print(f"tail: {xq[tail]}")
 
         root = avl.insertNode(root, xq[current])
+        print("AVL Preorder:")
         avl.preOrder(root)
         print("\n")
         delta = checkSuccessor(delta, q, root, avl, xq[current])
