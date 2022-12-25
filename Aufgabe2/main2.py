@@ -13,15 +13,15 @@ def checkSuccessor(delta, q, root, avl, value):
     check = copy.deepcopy(node)
     #print(f"checkS: {check.value}")
 
-    if check is None or check.rChild is None:
-        check = Node((9999,9999))
-    else:
-        check = avl.getSuccessor(check.rChild)
+    if check.rChild is None:
+        check.rChild = Node((9999,9999))
+
+    check = avl.getSuccessor(check.rChild)
 
     newDelta = q.calculateEuclidMetricDistance(node.value, check.value)
     if newDelta < delta:
             delta = newDelta
-
+    print(check.value[1] - node.value[1])
     while check.value[1] - node.value[1] < delta:
         if check.rChild:
             check = avl.getSuccessor(check.rChild)
@@ -46,15 +46,14 @@ def checkPredecessor(delta, q, root, avl, value):
     #Kopie des Knotens angelegt, da "Unendlichkeitsknoten" nicht in den Ursprungsbaum eingefuegt werden darf
     check = copy.deepcopy(node)
 
-    if check is None or check.lChild is None:
-        check = Node((-9999,-9999))
-    else:
-        check = avl.getPredecessor(check.lChild)
+    if check.lChild is None:
+        check.lChild = Node((-9999,-9999))
+    check = avl.getPredecessor(check.lChild)
 
     newDelta = q.calculateEuclidMetricDistance(node.value, check.value)
     if newDelta < delta:
             delta = newDelta
-
+    print(node.value[1] - check.value[1])
     while node.value[1] - check.value[1] < delta:
         if check.lChild:
             check = avl.getPredecessor(check.lChild)
@@ -97,7 +96,7 @@ def closestPair():
     root = avl.insertNode(root, xq[0])
     root = avl.insertNode(root, xq[1])
 
-    tail = 0
+    tail = 1
     current = 1
     
 
